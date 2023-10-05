@@ -1,20 +1,22 @@
 {
-  "name": "typescript-cli-boilerplate",
+  "name": "@maeum/tools",
   "version": "1.0.0",
-  "description": "TypeScript cli boilerplate",
+  "description": "maeum logging controller",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "clean": "rimraf dist",
-    "dev": "tsx src/cli.ts",
-    "debug": "node --inspect-brk -r ts-node/register src/cli.ts",
-    "prebuild": "pnpm run clean",
-    "build": "tsc --incremental --noEmit --project tsconfig.json --tsBuildInfoFile .tsbuildinfo",
+    "ctix": "ctix single -p ./tsconfig.prod.json --config .configs/.ctirc -g .configs/.ctiignore",
+    "ctix:remove": "rimraf src/index.ts",
+    "dts": "tsc --project tsconfig.prod.json --declaration --emitDeclarationOnly --declarationDir dist/types/origin",
+    "dts-gen": "rollup --config ./.configs/rollup.mjs",
+    "dts:clean": "rimraf dist/types/origin",
+    "build": "pnpm run clean && tsc --incremental --noEmit --project tsconfig.json --tsBuildInfoFile .tsbuildinfo",
     "esbuild-cjs": "FORMAT=cjs node .configs/esbuild.mjs",
     "esbuild-esm": "FORMAT=esm node .configs/esbuild.mjs",
-    "bundle-pack": "run-p esbuild-cjs esbuild-esm",
-    "bundle": "run-s bundle-pack",
+    "bundle-pack": "pnpm run ctix && run-p esbuild-cjs esbuild-esm dts && run-p ctix:remove",
+    "bundle": "run-s clean bundle-pack dts-gen dts:clean",
     "test": "jest --coverage",
     "lint": "eslint --cache .",
     "lint-staged": "lint-staged",
@@ -31,53 +33,65 @@
   "keywords": [],
   "author": "ByungJoon Lee",
   "license": "MIT",
-  "main": "dist/cjs/cli.cjs",
-  "bin": {
-    "tcb": "dist/cjs/cli.cjs"
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "default": "./dist/cjs/index.cjs",
+        "types": "./dist/types/index.d.ts"
+      },
+      "import": {
+        "default": "./dist/esm/index.mjs",
+        "types": "./dist/types/index.d.ts"
+      }
+    }
   },
+  "files": [
+    "dist"
+  ],
   "bugs": {
     "url": "https://github.com/imjuni/typescript-cli-boilerplate/issues"
   },
   "homepage": "https://github.com/imjuni/typescript-cli-boilerplate#readme",
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@tsconfig/node18": "^18.2.2",
-    "@types/jest": "^29.5.4",
-    "@types/node": "^18.11.9",
-    "@types/source-map-support": "^0.5.7",
-    "@types/yargs": "^17.0.24",
-    "@typescript-eslint/eslint-plugin": "^6.5.0",
-    "@typescript-eslint/parser": "^6.5.0",
+    "@types/node": "^18.18.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
     "cross-env": "^7.0.3",
+    "ctix": "^1.8.2",
     "deps-diff": "^1.0.2",
     "esbuild": "0.19.2",
-    "eslint": "^8.48.0",
+    "eslint": "^8.50.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-jsdoc": "^46.5.1",
+    "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
-    "jest": "^29.6.4",
+    "jest": "^29.7.0",
     "lint-staged": "^14.0.1",
     "npm-run-all": "^4.1.5",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-organize-imports": "^3.2.3",
     "read-pkg": "^5.2.0",
-    "rimraf": "^5.0.1",
+    "rimraf": "^5.0.5",
+    "rollup": "^3.29.4",
+    "rollup-plugin-dts": "^6.0.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "tslib": "^2.5.2",
-    "tsx": "^3.12.8",
+    "tslib": "^2.6.2",
+    "tsx": "^3.13.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "consola": "^3.2.3",
-    "my-easy-fp": "^0.21.0",
-    "source-map-support": "^0.5.21",
-    "yargs": "^17.7.2"
+    "my-easy-fp": "^0.21.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

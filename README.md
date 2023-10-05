@@ -1,12 +1,65 @@
-# TypeScript cli boilerplate
+# @maeum/tools
 
-## installation
+![ts](https://flat.badgen.net/badge/Built%20With/TypeScript/blue)
+[![Download Status](https://img.shields.io/npm/dw/@maeum/tools.svg?style=flat-square)](https://npmcharts.com/compare/@maeum/tools)
+[![Github Star](https://img.shields.io/github/stars/maeumjs/tools.svg?style=flat-square)](https://github.com/maeumjs/tools)
+[![Github Issues](https://img.shields.io/github/issues-raw/maeumjs/tools.svg?style=flat-square)](https://github.com/maeumjs/tools/issues)
+[![NPM version](https://img.shields.io/npm/v/@maeum/tools.svg?style=flat-square)](https://www.npmjs.com/package/@maeum/tools)
+[![@maeum/tools](https://github.com/maeumjs/tools/actions/workflows/ci.yml/badge.svg?style=flat-square)](https://github.com/maeumjs/tools/actions/workflows/ci.yml)
+[![License](https://img.shields.io/npm/l/@maeum/tools.svg?style=flat-square)](https://github.com/maeumjs/tools/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/imjuni/tools/branch/master/graph/badge.svg?token=cYJEAvZUFU)](https://codecov.io/gh/maeum/tools)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
+The `@maeum/tools` is a collection of useful functions for writing APT servers.
+
+## Table of Contents <!-- omit in toc -->
+
+- [Getting Started](#getting-started)
+  - [installation](#installation)
+- [Feature](#feature)
+  - [EncryptContainer](#encryptcontainer)
+    - [Bootstrap options overview](#bootstrap-options-overview)
+  - [Functions](#functions)
+
+## Getting Started
+
+### installation
 
 ```bash
-# Clone the boilerplate:
-git clone --depth=1 \
-  https://github.com/imjuni/typescript-cli-boilerplate.git \
-  your-project-name
-
-cd your-project-name
+npm install @maeum/tools --save
 ```
+
+## Feature
+
+### EncryptContainer
+
+Class to help with `AES-256-CBC` encryption and decryption. You can use it when writing server code to encrypt the location of an error in the response results. Certain countries may prohibit exposing the location of these errors in the response results. For example, in South Korea, sites with more than a certain number of users are not allowed to expose the location of errors to the public internet. EncryptContainer can be used to encrypt the error response location in such cases.
+
+```ts
+const err = new Error('i am error raised your specific source code');
+
+EncryptContainer.bootstrap();
+
+// You can use the encrypted value in logs or API responses
+const encrypted = EncryptContainer.it.encrypt(
+  JSON.stringify({ message: err.message, stack: err.stack }),
+);
+const decrypted = EncryptContainer.it.encrypt(encrypted);
+```
+
+#### Bootstrap options overview
+
+| Property | Type     | Description                                                               |
+| -------- | -------- | ------------------------------------------------------------------------- |
+| `ivSize` | `number` | Specify the initialize vector size.                                       |
+| `salt`   | `number` | Specifies the maximum size of the salt to make decryption more difficult. |
+| `key`    | `string` | Specifies the encryption key.                                             |
+
+### Functions
+
+| name          | Description                                                                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| noop          | noop function                                                                                                                                          |
+| escape        | Use to remove newline characters when logging log record                                                                                     |
+| safeStringify | If an exception is thrown when using the JSON.stringify function, execution will stop. safeStringify will return the value passed as defaultValue if an exception is thrown. |
+| objectify     | Returns only those fields from the input object that conform to the JSON specification                                                                                    |
