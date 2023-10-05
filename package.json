@@ -1,7 +1,7 @@
 {
   "name": "@maeum/tools",
   "version": "1.0.0",
-  "description": "maeum logging controller",
+  "description": "maeum miscellaneous functions",
   "engines": {
     "node": ">=18"
   },
@@ -21,15 +21,15 @@
     "lint": "eslint --cache .",
     "lint-staged": "lint-staged",
     "pub": "pnpm publish --registry http://localhost:8901",
-    "unpub": "pnpm unpublish typescript-cli-boilerplate@$npm_package_version --registry http://localhost:8901 --force",
-    "pub:prod": "RELEASE_MODE=true pnpm publish",
+    "unpub": "pnpm unpublish @maeum/tools@$npm_package_version --registry http://localhost:8901 --force",
+    "pub:prod": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --access=public",
     "dd": "deps-diff md -d prod -d dev --title-list-type '*' --deps-list-type '*' --content-list-type '*'",
     "prepublishOnly": "node prepublish.cjs",
     "prepare": "husky install"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imjuni/typescript-cli-boilerplate.git"
+    "url": "git+https://github.com/maeumjs/tools.git"
   },
   "keywords": [],
   "author": "ByungJoon Lee",
@@ -53,9 +53,9 @@
     "dist"
   ],
   "bugs": {
-    "url": "https://github.com/imjuni/typescript-cli-boilerplate/issues"
+    "url": "https://github.com/maeumjs/tools.git/issues"
   },
-  "homepage": "https://github.com/imjuni/typescript-cli-boilerplate#readme",
+  "homepage": "https://github.com/maeumjs/tools.git#readme",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@tsconfig/node18": "^18.2.2",
