@@ -76,6 +76,9 @@ devDependencies:
   npm-run-all:
     specifier: ^4.1.5
     version: 4.1.5
+  prettier:
+    specifier: ^3.0.3
+    version: 3.0.3
   prettier-eslint:
     specifier: ^15.0.1
     version: 15.0.1
