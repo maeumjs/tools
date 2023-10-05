@@ -5,6 +5,8 @@ import crypto from 'node:crypto';
 export default class EncryptContiner {
   static #it: EncryptContiner;
 
+  static #isBootstrap: boolean = false;
+
   static MAX_SALT = 16;
 
   static DEFAULT_SALT = 8;
@@ -13,6 +15,10 @@ export default class EncryptContiner {
 
   static get it(): EncryptContiner {
     return EncryptContiner.#it;
+  }
+
+  static get isBootstrap(): boolean {
+    return EncryptContiner.#isBootstrap;
   }
 
   static getSaltSize(size?: number) {
@@ -38,6 +44,7 @@ export default class EncryptContiner {
   static bootstrap(nullable?: Partial<IEncryptContinerOption>) {
     const option = EncryptContiner.getOption(nullable);
     EncryptContiner.#it = new EncryptContiner(option);
+    EncryptContiner.#isBootstrap = true;
   }
 
   #option: IEncryptContinerOption;
