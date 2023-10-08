@@ -6,6 +6,10 @@ describe('EncryptContiner', () => {
     EncryptContiner.bootstrap();
   });
 
+  it('is-bootstrap', () => {
+    expect(EncryptContiner.isBootstrap).toBeTruthy();
+  });
+
   it('salt', () => {
     const r01 = EncryptContiner.getSaltSize();
     const r02 = EncryptContiner.getSaltSize(10);
