@@ -1,10 +1,10 @@
-import type { RawRequestDefaultExpression, RawServerDefault } from 'fastify';
+import type { RawRequestDefaultExpression, RawServerBase, RawServerDefault } from 'fastify';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 
 export default function getGenReqIdHandler(key: string, gen?: () => string) {
   const generator = gen ?? randomUUID;
-  const genReqIdHandler = <T extends RawServerDefault>(
+  const genReqIdHandler = <T extends RawServerBase = RawServerDefault>(
     req: Pick<RawRequestDefaultExpression<T>, 'url'>,
   ) => {
     try {
