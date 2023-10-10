@@ -1,6 +1,6 @@
 {
   "name": "@maeum/tools",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "maeum miscellaneous functions",
   "engines": {
     "node": ">=18"
