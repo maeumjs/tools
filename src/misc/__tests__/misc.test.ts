@@ -51,6 +51,17 @@ describe('getGenReqIdHandler', () => {
     expect(id).toEqual(tid);
   });
 
+  it('undefined url', () => {
+    const tid = '70cd9767-38ac-4bda-b07e-a606c1c54c0b';
+
+    jest.spyOn(crypto, 'randomUUID').mockImplementationOnce(() => tid);
+
+    const handle01 = getGenReqIdHandler('tid');
+    const id = handle01({ url: undefined });
+
+    expect(id).toEqual(tid);
+  });
+
   it('raise exception in function', () => {
     const tid = '70cd9767-38ac-4bda-b07e-a606c1c54c0b';
 
