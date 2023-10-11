@@ -1,7 +1,14 @@
 import type { ErrorObject } from 'ajv';
 
 export interface IValidationErrorSummary {
-  [key: string]: { message: string; data?: unknown; schemaPath: string; params?: unknown };
+  [key: string]: {
+    [key: string]: {
+      message: string;
+      data?: unknown;
+      schemaPath: string;
+      params?: unknown;
+    };
+  };
 }
 
 export default function getValidationErrorSummary(
@@ -21,12 +28,18 @@ export default function getValidationErrorSummary(
     )
     .map((error) => ({
       message: error.message ?? 'validation error occured',
-      instancePath: error.instancePath,
+      instancePath: error.instancePath === '' ? '.' : error.instancePath,
       data: error.data,
       schemaPath: error.schemaPath,
       params: error.params,
     }))
     .reduce<IValidationErrorSummary>((aggregation, error) => {
-      return { ...aggregation, [error.instancePath]: error };
+      return {
+        ...aggregation,
+        [error.instancePath]: {
+          ...aggregation[error.instancePath],
+          [error.schemaPath]: error,
+        },
+      };
     }, {});
 }
