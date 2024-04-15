@@ -1,6 +1,6 @@
-import escape from '#/stringify/escape';
-import objectify from '#/stringify/objectify';
-import safeStringify from '#/stringify/safeStringify';
+import { escape } from '#/stringify/escape';
+import { objectify } from '#/stringify/objectify';
+import { safeStringify } from '#/stringify/safeStringify';
 import { describe, expect, it, jest } from '@jest/globals';
 
 describe('escape', () => {

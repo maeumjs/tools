@@ -1,6 +1,6 @@
-import getCwd from '#/misc/getCwd';
-import getGenReqIdHandler from '#/misc/getGenReqIdHandler';
-import noop from '#/misc/noop';
+import { getCwd } from '#/modules/getCwd';
+import { getGenReqID } from '#/modules/getGenReqID';
+import { noop } from '#/modules/noop';
 import { describe, expect, it, jest } from '@jest/globals';
 import crypto from 'node:crypto';
 import path from 'node:path';
@@ -25,7 +25,7 @@ describe('getGenReqIdHandler', () => {
   it('without protocal and host', () => {
     const tid = '70cd9767-38ac-4bda-b07e-a606c1c54c0b';
 
-    const handle01 = getGenReqIdHandler('tid');
+    const handle01 = getGenReqID('tid');
     const id = handle01({ url: `/super/hero?name=ironman&tid=${tid}` });
 
     expect(id).toEqual(tid);
@@ -34,7 +34,7 @@ describe('getGenReqIdHandler', () => {
   it('without protocal and host', () => {
     const tid = '70cd9767-38ac-4bda-b07e-a606c1c54c0b';
 
-    const handle01 = getGenReqIdHandler('tid');
+    const handle01 = getGenReqID('tid');
     const id = handle01({ url: `http://localhost/super/hero?name=ironman&tid=${tid}` });
 
     expect(id).toEqual(tid);
@@ -45,7 +45,7 @@ describe('getGenReqIdHandler', () => {
 
     jest.spyOn(crypto, 'randomUUID').mockImplementationOnce(() => tid);
 
-    const handle01 = getGenReqIdHandler('tid');
+    const handle01 = getGenReqID('tid');
     const id = handle01({ url: `http://localhost/super/hero?name=ironman` });
 
     expect(id).toEqual(tid);
@@ -56,7 +56,7 @@ describe('getGenReqIdHandler', () => {
 
     jest.spyOn(crypto, 'randomUUID').mockImplementationOnce(() => tid);
 
-    const handle01 = getGenReqIdHandler('tid');
+    const handle01 = getGenReqID('tid');
     const id = handle01({ url: undefined });
 
     expect(id).toEqual(tid);
@@ -70,7 +70,7 @@ describe('getGenReqIdHandler', () => {
       throw new Error('error');
     });
 
-    const handle01 = getGenReqIdHandler('tid');
+    const handle01 = getGenReqID('tid');
     const id = handle01({ url: '/super/hero?name=ironman' });
 
     expect(id).toEqual(tid);

@@ -20,9 +20,12 @@ module.exports = {
     project: ['tsconfig.eslint.json'],
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['coverage/**', 'dist/**', '__test__/**', '__tests__/**'],
+  ignorePatterns: ['coverage/**', 'dist/**', '__test__/**', '__tests__/**', 'prepublish.cjs'],
   plugins: ['@typescript-eslint', 'prettier', 'import'],
   rules: {
+    // ----------------------------------------------------------------------------------------------------------
+    // eslint
+    // ----------------------------------------------------------------------------------------------------------
     'max-len': [
       'error',
       {
@@ -34,6 +37,49 @@ module.exports = {
         code: 120,
       },
     ],
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSEnumDeclaration:not([const=true])',
+        message: "Don't declare non-const enums",
+      },
+    ],
+    // ----------------------------------------------------------------------------------------------------------
+    // @typescript-eslint
+    // ----------------------------------------------------------------------------------------------------------
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^I[A-Z]+',
+          match: true,
+        },
+      },
+      {
+        selector: 'typeAlias',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^T[A-Z]+',
+          match: true,
+        },
+      },
+    ],
+    '@typescript-eslint/member-delimiter-style': [
+      'off',
+      {
+        multiline: {
+          delimiter: 'none',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+      },
+    ],
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -41,11 +87,17 @@ module.exports = {
         argsIgnorePattern: '^_.+$',
       },
     ],
-    'import/extensions': ['off'],
-    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-    // static function use this: void
-    '@typescript-eslint/no-invalid-void-type': ['error', { allowAsThisParameter: true }],
-    '@typescript-eslint/no-unnecessary-boolean-literal-compare': ['off'],
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      {
+        prefer: 'type-imports',
+      },
+    ],
+    // ----------------------------------------------------------------------------------------------------------
+    // eslint-plugin-import
+    // ----------------------------------------------------------------------------------------------------------
+    'import/prefer-default-export': ['off'],
+    'import/no-default-export': ['error'],
   },
   overrides: [
     {
@@ -60,15 +112,50 @@ module.exports = {
       },
     },
     {
-      files: ['src/encrypt/EncryptContainer.ts'],
+      files: ['**/CE_*.ts'],
       rules: {
-        'class-methods-use-this': ['off'],
+        '@typescript-eslint/no-redeclare': ['off'],
+        '@typescript-eslint/naming-convention': ['off'],
+      },
+    },
+    {
+      files: [
+        'src/loggings/winston/WinstonLoggers.ts',
+        'src/loggings/winston/interfaces/IWintonLogger.ts',
+        'src/loggings/pino/PinoLoggers.ts',
+        'src/loggings/pino/interfaces/IPinoLogger.ts',
+      ],
+      rules: {
+        '@typescript-eslint/no-explicit-any': ['off'],
+        '@typescript-eslint/no-unsafe-assignment': ['off'],
+        '@typescript-eslint/no-unsafe-argument': ['off'],
+      },
+    },
+    {
+      files: ['src/http/logging/RequestLogger.ts'],
+      rules: {
+        '@typescript-eslint/no-floating-promises': ['off'],
+      },
+    },
+    {
+      files: ['src/pino/interfaces/IPinoContainerOption.ts'],
+      rules: {
+        '@typescript-eslint/no-redundant-type-constituents': ['off'],
       },
     },
     {
       files: ['**/__tests__/*.ts'],
       rules: {
+        '@typescript-eslint/no-explicit-any': ['off'],
+        '@typescript-eslint/no-unsafe-argument': ['off'],
         '@typescript-eslint/no-unsafe-assignment': ['off'],
+        '@typescript-eslint/consistent-type-imports': ['off'],
+        'no-console': ['off'],
+      },
+    },
+    {
+      files: ['prepublish.cjs'],
+      rules: {
         'no-console': ['off'],
       },
     },

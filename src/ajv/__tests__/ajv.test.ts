@@ -1,4 +1,4 @@
-import getValidationErrorSummary from '#/ajv/getValidationErrorSummary';
+import { getValidationErrorSummary } from '#/ajv/getValidationErrorSummary';
 import { describe, expect, it } from '@jest/globals';
 
 describe('getValidationErrorSummary', () => {

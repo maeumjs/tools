@@ -11,7 +11,7 @@ export interface IValidationErrorSummary {
   };
 }
 
-export default function getValidationErrorSummary(
+export function getValidationErrorSummary(
   errors: (
     | Pick<ErrorObject, 'message' | 'instancePath' | 'data' | 'schemaPath' | 'params'>
     | undefined

@@ -1,58 +1,14 @@
-import type IEncryptContinerOption from '#/encrypt/IEncryptContinerOption';
+import type { IEncryptContinerOptions } from '#/encrypts/IEncryptContinerOptions';
 import { getRandomRangeInt } from 'my-easy-fp';
 import crypto from 'node:crypto';
 
-export default class EncryptContiner {
-  static #it: EncryptContiner;
-
-  static #isBootstrap: boolean = false;
-
-  static MAX_SALT = 16;
-
-  static DEFAULT_SALT = 8;
-
-  static DEFAULT_INITIALIZE_VECTOR_SIZE = 16;
-
-  static get it(): EncryptContiner {
-    return EncryptContiner.#it;
-  }
-
-  static get isBootstrap(): boolean {
-    return EncryptContiner.#isBootstrap;
-  }
-
-  static getSaltSize(size?: number) {
-    if (size == null) {
-      return EncryptContiner.DEFAULT_SALT;
-    }
-
-    if (size > 1 && size < EncryptContiner.MAX_SALT) {
-      return size;
-    }
-
-    return EncryptContiner.DEFAULT_SALT;
-  }
-
-  static getOption(nullable?: Partial<IEncryptContinerOption>) {
-    const ivSize = nullable?.ivSize ?? EncryptContiner.DEFAULT_INITIALIZE_VECTOR_SIZE;
-    const key = nullable?.key ?? 'fb63f6de1233492a93b8df9eea402caa';
-    const salt = EncryptContiner.getSaltSize(nullable?.salt);
-
-    return { ivSize, key, salt } satisfies IEncryptContinerOption;
-  }
-
-  static bootstrap(nullable?: Partial<IEncryptContinerOption>) {
-    const option = EncryptContiner.getOption(nullable);
-    EncryptContiner.#it = new EncryptContiner(option);
-    EncryptContiner.#isBootstrap = true;
-  }
-
-  #option: IEncryptContinerOption;
+export class Encryptioner {
+  #option: IEncryptContinerOptions;
 
   #algorithm = 'aes-256-cbc';
 
-  constructor(option: IEncryptContinerOption) {
-    this.#option = option;
+  constructor(options: IEncryptContinerOptions) {
+    this.#option = options;
   }
 
   getSalt() {
@@ -68,6 +24,7 @@ export default class EncryptContiner {
     return `${saltPart}${ivPart}${encryptedPart}${saltSize}`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   decryptResultBuilder(decrypted: Buffer, decipher: crypto.Decipher) {
     return Buffer.concat([decrypted, decipher.final()]).toString();
   }

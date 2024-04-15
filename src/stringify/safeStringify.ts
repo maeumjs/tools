@@ -1,4 +1,4 @@
-export default function safeStringify(
+export function safeStringify(
   data: unknown,
   replacer?: (this: unknown, key: string, value: unknown) => unknown,
   space?: string | number,
