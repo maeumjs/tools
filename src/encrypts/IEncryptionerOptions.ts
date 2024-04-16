@@ -1,4 +1,4 @@
-export interface IEncryptContinerOptions {
+export interface IEncryptionerOptions {
   /** specify the initialize vector size */
   ivSize: number;
 
