@@ -1,3 +1,4 @@
+import { getInstancePath } from '#/ajv/getInstancePath';
 import type { ErrorObject } from 'ajv';
 
 export interface IValidationErrorSummary {
@@ -28,7 +29,7 @@ export function getValidationErrorSummary(
     )
     .map((error) => ({
       message: error.message ?? 'validation error occured',
-      instancePath: error.instancePath === '' ? '.' : error.instancePath,
+      instancePath: getInstancePath(error.instancePath),
       data: error.data,
       schemaPath: error.schemaPath,
       params: error.params,

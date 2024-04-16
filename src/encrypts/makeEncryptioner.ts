@@ -12,4 +12,5 @@ export function makeEncryptioner(
   const encryptioner = new Encryptioner(options);
 
   container.register(ENCRYPTIONER_SYMBOL_KEY, encryptioner);
+  return encryptioner;
 }
