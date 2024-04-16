@@ -1,13 +1,13 @@
-import type { IEncryptContinerOptions } from '#/encrypts/IEncryptContinerOptions';
+import type { IEncryptionerOptions } from '#/encrypts/IEncryptionerOptions';
 import { getRandomRangeInt } from 'my-easy-fp';
 import crypto from 'node:crypto';
 
 export class Encryptioner {
-  #option: IEncryptContinerOptions;
+  #option: IEncryptionerOptions;
 
   #algorithm = 'aes-256-cbc';
 
-  constructor(options: IEncryptContinerOptions) {
+  constructor(options: IEncryptionerOptions) {
     this.#option = options;
   }
 

@@ -17,8 +17,9 @@ The `@maeum/tools` is a collection of useful functions for writing APT servers.
 - [Getting Started](#getting-started)
   - [installation](#installation)
 - [Feature](#feature)
-  - [EncryptContainer](#encryptcontainer)
-    - [Bootstrap options overview](#bootstrap-options-overview)
+  - [Encryptioner](#encryptioner)
+    - [Encryptioner options overview](#encryptioner-options-overview)
+    - [DI](#di)
   - [Functions](#functions)
 
 ## Getting Started
@@ -31,29 +32,79 @@ npm install @maeum/tools --save
 
 ## Feature
 
-### EncryptContainer
+### Encryptioner
 
 Class to help with `AES-256-CBC` encryption and decryption. You can use it when writing server code to encrypt the location of an error in the response results. Certain countries may prohibit exposing the location of these errors in the response results. For example, in South Korea, sites with more than a certain number of users are not allowed to expose the location of errors to the public internet. EncryptContainer can be used to encrypt the error response location in such cases.
 
 ```ts
+const encryptioner = new Encryptioner(getEncryptionerOptions());
+
 const err = new Error('i am error raised your specific source code');
 
-EncryptContainer.bootstrap();
-
 // You can use the encrypted value in logs or API responses
-const encrypted = EncryptContainer.it.encrypt(
+const encrypted = encryptioner.encrypt(
   JSON.stringify({ message: err.message, stack: err.stack }),
 );
-const decrypted = EncryptContainer.it.encrypt(encrypted);
+const decrypted = encryptioner.encrypt(encrypted);
 ```
 
-#### Bootstrap options overview
+#### Encryptioner options overview
 
 | Property | Type     | Description                                                               |
 | -------- | -------- | ------------------------------------------------------------------------- |
 | `ivSize` | `number` | Specify the initialize vector size.                                       |
 | `salt`   | `number` | Specifies the maximum size of the salt to make decryption more difficult. |
 | `key`    | `string` | Specifies the encryption key.                                             |
+
+#### DI
+
+```ts
+makeEncryptioner(container, { 
+  ivSize: 16, 
+  key: 'your key', 
+  salt: 8,
+});
+
+const encryptioner = container.resolve(ENCRYPTIONER_SYMBOL_KEY);
+const encrypted = encryptioner.encrypt(
+  JSON.stringify({ message: err.message, stack: err.stack }),
+);
+const decrypted = encryptioner.encrypt(encrypted);
+```
+
+You can implement class container yourself.
+
+```ts
+class Container implements IClassContainer {
+  #container: Record<string | symbol, unknown> = {};
+
+  register<T>(name: string | symbol, registration: T): this {
+    this.#container[name] = registration;
+    return this;
+  }
+
+  resolve<K>(name: string | symbol): K {
+    return this.#container[name] as K;
+  }
+}
+```
+
+Also you can use already DI package like that [awilix](https://github.com/jeffijoe/awilix)
+
+```ts
+class Container implements IClassContainer {
+  #container: AwilixContainer = createContainer();
+
+  register<T>(name: string | symbol, registration: T): this {
+    this.#container.register(name, asValue(registration));
+    return this;
+  }
+
+  resolve<K>(name: string | symbol): K {
+    return this.#container.resolve(name) as K;
+  }
+}
+```
 
 ### Functions
 
