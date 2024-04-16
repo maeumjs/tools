@@ -1,5 +1,18 @@
+import { getInstancePath } from '#/ajv/getInstancePath';
 import { getValidationErrorSummary } from '#/ajv/getValidationErrorSummary';
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
+
+describe('getInstancePath', () => {
+  it('nullable instance-path', () => {
+    const r01 = getInstancePath();
+    expect(r01).toEqual('.');
+  });
+
+  it('non-nullable instance-path', () => {
+    const r01 = getInstancePath('11');
+    expect(r01).toEqual('11');
+  });
+});
 
 describe('getValidationErrorSummary', () => {
   const errors = [

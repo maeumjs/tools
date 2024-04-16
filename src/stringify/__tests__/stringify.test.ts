@@ -1,7 +1,7 @@
 import { escape } from '#/stringify/escape';
 import { objectify } from '#/stringify/objectify';
 import { safeStringify } from '#/stringify/safeStringify';
-import { describe, expect, it, jest } from '@jest/globals';
+import { describe, expect, it, vitest } from 'vitest';
 
 describe('escape', () => {
   it('add backslash', () => {
@@ -22,7 +22,7 @@ describe('safeStringify', () => {
   });
 
   it('invalid object', () => {
-    const spyH = jest.spyOn(JSON, 'stringify').mockImplementation(() => {
+    const spyH = vitest.spyOn(JSON, 'stringify').mockImplementation(() => {
       throw new Error('error');
     });
 
@@ -59,7 +59,7 @@ describe('objectify', () => {
 
   it('exception', () => {
     const err = new Error('error');
-    const spyH = jest.spyOn(JSON, 'stringify').mockImplementationOnce(() => {
+    const spyH = vitest.spyOn(JSON, 'stringify').mockImplementationOnce(() => {
       throw err;
     });
     const r01 = objectify({ name: 'ironman', f: (name: string) => `${name}:hello?` });
