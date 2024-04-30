@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=18"
   },
+  "packageManager": "pnpm@9.0.4",
   "scripts": {
     "clean": "rimraf dist",
     "ctix": "ctix build --config .configs/.ctirc",
@@ -19,10 +20,12 @@
     "bundle-lib-pack": "run-p esbuild-lib-cjs esbuild-lib-esm dts-pack",
     "bundle-lib": "run-s ctix bundle-lib-pack ctix-rm",
     "bundle": "run-s clean bundle-lib",
-    "build": "pnpm run clean && tsc --incremental --project tsconfig.prod.json",
+    "prebuild": "pnpm run clean",
+    "build": "tsc --incremental --project tsconfig.prod.json",
     "test": "vitest run --coverage",
     "lint": "eslint --cache .",
     "lint-staged": "lint-staged",
+    "prepub": "pnpm run unpub",
     "pub": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --registry http://localhost:8901",
     "unpub": "pnpm unpublish $npm_package_name@$npm_package_version --registry http://localhost:8901 --force",
     "pub:prod": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --access=public",
