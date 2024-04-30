@@ -1,4 +1,4 @@
-import type { IClassContainer } from '#/declarations/container';
+import type { IClassContainer } from '#/containers/container';
 import { ENCRYPTIONER_SYMBOL_KEY } from '#/encrypts/ENCRYPTIONER_SYMBOL_KEY';
 import { Encryptioner } from '#/encrypts/Encryptioner';
 import type { IEncryptionerOptions } from '#/encrypts/IEncryptionerOptions';

@@ -1,4 +1,4 @@
-import { IClassContainer } from '#/declarations/container';
+import { IClassContainer } from '#/containers/container';
 import { ENCRYPTIONER_SYMBOL_KEY } from '#/encrypts/ENCRYPTIONER_SYMBOL_KEY';
 import { Encryptioner } from '#/encrypts/Encryptioner';
 import { CE_ENCRYPTIONER_DEFAULT } from '#/encrypts/const-enum/CE_ENCRYPTIONER_DEFAULT';
