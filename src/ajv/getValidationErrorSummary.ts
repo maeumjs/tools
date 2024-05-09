@@ -1,23 +1,13 @@
 import { getInstancePath } from '#/ajv/getInstancePath';
+import type { IValidationErrors } from '#/ajv/interfaces/IValidationErrors';
 import type { ErrorObject } from 'ajv';
-
-export interface IValidationErrorSummary {
-  [key: string]: {
-    [key: string]: {
-      message: string;
-      data?: unknown;
-      schemaPath: string;
-      params?: unknown;
-    };
-  };
-}
 
 export function getValidationErrorSummary(
   errors: (
     | Pick<ErrorObject, 'message' | 'instancePath' | 'data' | 'schemaPath' | 'params'>
     | undefined
   )[],
-): IValidationErrorSummary {
+): IValidationErrors {
   return errors
     .filter(
       (
@@ -34,7 +24,7 @@ export function getValidationErrorSummary(
       schemaPath: error.schemaPath,
       params: error.params,
     }))
-    .reduce<IValidationErrorSummary>((aggregation, error) => {
+    .reduce<IValidationErrors>((aggregation, error) => {
       return {
         ...aggregation,
         [error.instancePath]: {
