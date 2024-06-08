@@ -1,5 +1,5 @@
-import { IClassContainer } from '#/containers/container';
-import { ENCRYPTIONER_SYMBOL_KEY } from '#/encrypts/ENCRYPTIONER_SYMBOL_KEY';
+import { CE_DI } from '#/di/CE_DI';
+import { IClassContainer } from '#/di/container';
 import { Encryptioner } from '#/encrypts/Encryptioner';
 import { CE_ENCRYPTIONER_DEFAULT } from '#/encrypts/const-enum/CE_ENCRYPTIONER_DEFAULT';
 import { getEncryptionerOptions } from '#/encrypts/getEncryptionerOptions';
@@ -49,7 +49,7 @@ describe('EncryptContiner', () => {
 
   it('makeEncryptioner', () => {
     makeEncryptioner(container);
-    const encryptioner = container.resolve<Encryptioner>(ENCRYPTIONER_SYMBOL_KEY);
+    const encryptioner = container.resolve<Encryptioner>(CE_DI.ENCRYPTIONER);
     expect(encryptioner).toBeInstanceOf(Encryptioner);
   });
 });
