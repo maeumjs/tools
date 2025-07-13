@@ -1,5 +1,6 @@
-import { getCwd } from '#/modules/getCwd';
 import { describe, expect, it } from 'vitest';
+
+import { getCwd } from '#/modules/getCwd';
 
 describe('getCwd', () => {
   it('normal situation', () => {

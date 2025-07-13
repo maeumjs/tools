@@ -1,7 +1,9 @@
-import { getGenReqID } from '#/modules/getGenReqID';
 import * as crypto from 'node:crypto';
 import path from 'node:path';
+
 import { describe, expect, it, vitest } from 'vitest';
+
+import { getGenReqID } from '#/modules/getGenReqID';
 
 vitest.mock('node:crypto', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports

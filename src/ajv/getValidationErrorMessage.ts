@@ -1,6 +1,8 @@
 import { getInstancePath } from '#/ajv/getInstancePath';
-import type { IValidationError } from '#/ajv/interfaces/IValidationError';
+
 import type { ErrorObject } from 'ajv';
+
+import type { IValidationError } from '#/ajv/interfaces/IValidationError';
 
 export function getValidationErrorMessage(
   errors: (

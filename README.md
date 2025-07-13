@@ -19,7 +19,6 @@ The `@maeum/tools` is a collection of useful functions for writing APT servers.
 - [Feature](#feature)
   - [Encryptioner](#encryptioner)
     - [Encryptioner options overview](#encryptioner-options-overview)
-    - [DI](#di)
   - [Functions](#functions)
 
 ## Getting Started
@@ -55,56 +54,6 @@ const decrypted = encryptioner.encrypt(encrypted);
 | `ivSize` | `number` | Specify the initialize vector size.                                       |
 | `salt`   | `number` | Specifies the maximum size of the salt to make decryption more difficult. |
 | `key`    | `string` | Specifies the encryption key.                                             |
-
-#### DI
-
-```ts
-makeEncryptioner(container, { 
-  ivSize: 16, 
-  key: 'your key', 
-  salt: 8,
-});
-
-const encryptioner = container.resolve(ENCRYPTIONER_SYMBOL_KEY);
-const encrypted = encryptioner.encrypt(
-  JSON.stringify({ message: err.message, stack: err.stack }),
-);
-const decrypted = encryptioner.encrypt(encrypted);
-```
-
-You can implement class container yourself.
-
-```ts
-class Container implements IClassContainer {
-  #container: Record<string | symbol, unknown> = {};
-
-  register<T>(name: string | symbol, registration: T): this {
-    this.#container[name] = registration;
-    return this;
-  }
-
-  resolve<K>(name: string | symbol): K {
-    return this.#container[name] as K;
-  }
-}
-```
-
-Also you can use already DI package like that [awilix](https://github.com/jeffijoe/awilix)
-
-```ts
-class Container implements IClassContainer {
-  #container: AwilixContainer = createContainer();
-
-  register<T>(name: string | symbol, registration: T): this {
-    this.#container.register(name, asValue(registration));
-    return this;
-  }
-
-  resolve<K>(name: string | symbol): K {
-    return this.#container.resolve(name) as K;
-  }
-}
-```
 
 ### Functions
 

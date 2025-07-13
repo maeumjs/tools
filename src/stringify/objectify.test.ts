@@ -1,5 +1,6 @@
-import { objectify } from '#/stringify/objectify';
 import { describe, expect, it, vitest } from 'vitest';
+
+import { objectify } from '#/stringify/objectify';
 
 describe('objectify', () => {
   it('function termination', () => {

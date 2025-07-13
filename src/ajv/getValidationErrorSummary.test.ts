@@ -1,6 +1,8 @@
-import { getValidationErrorSummary } from '#/ajv/getValidationErrorSummary';
-import type { ErrorObject } from 'ajv';
 import { beforeAll, describe, expect, it } from 'vitest';
+
+import { getValidationErrorSummary } from '#/ajv/getValidationErrorSummary';
+
+import type { ErrorObject } from 'ajv';
 
 const context: {
   errors: Pick<ErrorObject, 'message' | 'instancePath' | 'data' | 'schemaPath' | 'params'>[];
