@@ -101,7 +101,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['jest.config.cjs'],
+      files: ['vitest.config.mts'],
       rules: {
         'import/no-extraneous-dependencies': ['off'],
         '@typescript-eslint/no-unsafe-call': ['off'],
