@@ -1,5 +1,5 @@
 import { getValidationErrorMessage } from '#/ajv/getValidationErrorMessage';
-import { ErrorObject } from 'ajv';
+import type { ErrorObject } from 'ajv';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 const context: {

@@ -1,3 +1,4 @@
+import { CE_ENCRYPTIONER_DEFAULT } from '#/encrypts/const-enum/CE_ENCRYPTIONER_DEFAULT';
 import type { IEncryptionerOptions } from '#/encrypts/IEncryptionerOptions';
 import { getRandomRangeInt } from 'my-easy-fp';
 import crypto from 'node:crypto';
@@ -9,6 +10,33 @@ export class Encryptioner {
 
   constructor(options: IEncryptionerOptions) {
     this.#option = options;
+  }
+
+  static getSaltSize(size?: number) {
+    if (size == null) {
+      return CE_ENCRYPTIONER_DEFAULT.DEFAULT_SALT;
+    }
+
+    if (size > 1 && size <= CE_ENCRYPTIONER_DEFAULT.MAX_SALT) {
+      return size;
+    }
+
+    return CE_ENCRYPTIONER_DEFAULT.DEFAULT_SALT;
+  }
+
+  static getOptions(nullable?: Partial<IEncryptionerOptions>) {
+    const ivSize = nullable?.ivSize ?? CE_ENCRYPTIONER_DEFAULT.DEFAULT_INITIALIZE_VECTOR_SIZE;
+    const key =
+      nullable?.key ??
+      crypto
+        .createHash('sha256')
+        .update(process.cwd())
+        .digest('base64')
+        .substring(0, CE_ENCRYPTIONER_DEFAULT.DEFAULT_INITIALIZE_VECTOR_SIZE * 2);
+
+    const salt = Encryptioner.getSaltSize(nullable?.salt);
+
+    return { ivSize, key, salt } satisfies IEncryptionerOptions;
   }
 
   getSalt() {

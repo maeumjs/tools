@@ -1,6 +1,4 @@
-import { getCwd } from '#/modules/getCwd';
 import { getGenReqID } from '#/modules/getGenReqID';
-import { noop } from '#/modules/noop';
 import * as crypto from 'node:crypto';
 import path from 'node:path';
 import { describe, expect, it, vitest } from 'vitest';
@@ -15,22 +13,6 @@ vitest.mock('node:path', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const mod = await importOriginal<typeof import('node:path')>();
   return { ...mod };
-});
-
-describe('noop', () => {
-  it('pass', () => {
-    noop();
-  });
-});
-
-describe('getCwd', () => {
-  it('normal situation', () => {
-    const r01 = getCwd({ INIT_CWD: 'maeum-path' });
-    const r02 = getCwd();
-
-    expect(r01).toEqual('maeum-path');
-    expect(r02).toEqual(process.cwd());
-  });
 });
 
 describe('getGenReqIdHandler', () => {
