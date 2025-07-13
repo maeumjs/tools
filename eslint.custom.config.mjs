@@ -1,3 +1,5 @@
+export const tsFiles = ['**/*.ts', '**/*.cts', '**/*.mts', '**/*.tsx', '**/*.d.ts'];
+
 export const customEslintRule = [
   {
     rules: {
@@ -96,10 +98,19 @@ export const customIgnore = [
   },
 ];
 
+export const customTsconfig = {
+  files: ['**/*.ts', '**/*.cts', '**/*.mts', '**/*.tsx', '**/*.d.ts'],
+  languageOptions: {
+    parserOptions: {
+      project: ['./tsconfig.eslint.json'],
+    },
+  },
+};
+
 export const customTypescriptRule = [
   {
     name: 'project/custom/typescript/rules',
-    files: ['**/*.ts', '**/*.cts', '**/*.mts', '**/*.tsx', '**/*.d.ts'],
+    files: tsFiles,
     rules: {
       // ----------------------------------------------------------------------------------------------------------
       // @typescript-eslint

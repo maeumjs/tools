@@ -41,6 +41,6 @@
     "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
     "pretty": true
   },
-  "include": ["./src", ".eslintrc.cjs", "vitest.config.mts", "prepublish.cjs"],
+  "include": ["./src"],
   "exclude": ["**/dist/**/*", "**/.configs/**"]
 }

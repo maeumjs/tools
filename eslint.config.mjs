@@ -18,6 +18,7 @@ import {
   customIgnore,
   customOverrideEslintRule,
   customOverrideImportXPlugin,
+  customTsconfig,
   customTypescriptRule,
 } from './eslint.custom.config.mjs';
 
@@ -56,6 +57,7 @@ const typescriptConfig = [
   // Strict TypeScript Config
   rules.typescript.typescriptEslintStrict,
   ...customTypescriptRule,
+  customTsconfig,
 ];
 
 const prettierConfig = [
