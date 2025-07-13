@@ -119,32 +119,7 @@ module.exports = {
       },
     },
     {
-      files: [
-        'src/loggings/winston/WinstonLoggers.ts',
-        'src/loggings/winston/interfaces/IWintonLogger.ts',
-        'src/loggings/pino/PinoLoggers.ts',
-        'src/loggings/pino/interfaces/IPinoLogger.ts',
-      ],
-      rules: {
-        '@typescript-eslint/no-explicit-any': ['off'],
-        '@typescript-eslint/no-unsafe-assignment': ['off'],
-        '@typescript-eslint/no-unsafe-argument': ['off'],
-      },
-    },
-    {
-      files: ['src/http/logging/RequestLogger.ts'],
-      rules: {
-        '@typescript-eslint/no-floating-promises': ['off'],
-      },
-    },
-    {
-      files: ['src/pino/interfaces/IPinoContainerOption.ts'],
-      rules: {
-        '@typescript-eslint/no-redundant-type-constituents': ['off'],
-      },
-    },
-    {
-      files: ['**/__tests__/*.ts'],
+      files: ['**/*.test.ts'],
       rules: {
         '@typescript-eslint/no-explicit-any': ['off'],
         '@typescript-eslint/no-unsafe-argument': ['off'],
