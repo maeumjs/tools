@@ -1,13 +1,15 @@
 import { getInstancePath } from '#/ajv/getInstancePath';
-import type { IValidationErrors } from '#/ajv/interfaces/IValidationErrors';
+
 import type { ErrorObject } from 'ajv';
+
+import type { TValidationErrors } from '#/ajv/interfaces/IValidationErrors';
 
 export function getValidationErrorSummary(
   errors: (
     | Pick<ErrorObject, 'message' | 'instancePath' | 'data' | 'schemaPath' | 'params'>
     | undefined
   )[],
-): IValidationErrors {
+): TValidationErrors {
   return errors
     .filter(
       (
@@ -24,13 +26,14 @@ export function getValidationErrorSummary(
       schemaPath: error.schemaPath,
       params: error.params,
     }))
-    .reduce<IValidationErrors>((aggregation, error) => {
-      return {
+    .reduce<TValidationErrors>(
+      (aggregation, error) => ({
         ...aggregation,
         [error.instancePath]: {
           ...aggregation[error.instancePath],
           [error.schemaPath]: error,
         },
-      };
-    }, {});
+      }),
+      {},
+    );
 }

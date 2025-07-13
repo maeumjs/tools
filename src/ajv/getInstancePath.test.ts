@@ -1,5 +1,6 @@
-import { getInstancePath } from '#/ajv/getInstancePath';
 import { describe, expect, it } from 'vitest';
+
+import { getInstancePath } from '#/ajv/getInstancePath';
 
 describe('getInstancePath', () => {
   it('nullable instance-path', () => {

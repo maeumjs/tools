@@ -1,5 +1,6 @@
-import { safeStringify } from '#/stringify/safeStringify';
 import { describe, expect, it, vitest } from 'vitest';
+
+import { safeStringify } from '#/stringify/safeStringify';
 
 describe('safeStringify', () => {
   it('plain object', () => {

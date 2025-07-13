@@ -1,5 +1,6 @@
-import { escape } from '#/stringify/escape';
 import { describe, expect, it } from 'vitest';
+
+import { escape } from '#/stringify/escape';
 
 describe('escape', () => {
   it('add backslash', () => {
