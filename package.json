@@ -1,9 +1,9 @@
 {
   "name": "@maeum/tools",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "maeum miscellaneous functions",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "packageManager": "pnpm@9.1.0",
   "scripts": {
@@ -29,7 +29,7 @@
     "pub": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --registry http://localhost:8901",
     "unpub": "pnpm unpublish $npm_package_name@$npm_package_version --registry http://localhost:8901 --force",
     "pub:prod": "pnpm run bundle && cross-env RELEASE_MODE=true pnpm publish --access=public",
-    "dd": "deps-diff md -d prod -d dev --title-list-type '*' --deps-list-type '*' --content-list-type '*'",
+    "dd": "deps-diff md -d prod -d dev --title-list-type 'm' --deps-list-type 'm' --content-list-type 'm'",
     "prepublishOnly": "node prepublish.cjs",
     "prepare": "husky install"
   },
@@ -67,8 +67,8 @@
     "@eslint/js": "^9.31.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@stylistic/eslint-plugin": "^3.1.0",
-    "@tsconfig/node18": "^18.2.2",
-    "@types/node": "^18.18.3",
+    "@tsconfig/node20": "^20.1.6",
+    "@types/node": "^20.19.8",
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
     "ajv": "^8.12.0",
@@ -96,7 +96,7 @@
     "tsc-alias": "^1.8.8",
     "tslib": "^2.6.2",
     "tsx": "^4.7.2",
-    "typescript": "^5.4.5",
+    "typescript": "5.8.3",
     "typescript-eslint": "^8.36.0",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.2.4"
